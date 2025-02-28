@@ -19,34 +19,42 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper,CategoryRepository categoryRepository) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,
+                          CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.categoryRepository = categoryRepository;
     }
 
-
-    public Product create(ProductDTO productDTO){
+    public Product create(ProductDTO productDTO) {
         Optional<Category> category = categoryRepository.findById(productDTO.getCategory());
+
+        if (category.isEmpty()) {
+            throw new Error("Category doesn't exist");
+        }
+
         Product product = productMapper.toProduct(productDTO);
         product.setCategory(category.get());
-        return productRepository.save(productMapper.toProduct(productDTO));
+
+        return productRepository.save(product);
     }
-    public List<Product> findAll(){
+
+    public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    public Product findById(Long id){
-        if(productRepository.findById(id).isEmpty()){
+    public Product findById(Long id) {
+        if (productRepository.findById(id).isEmpty()) {
             return null;
         }
         return productRepository.findById(id).get();
     }
 
-    public Product update(Product product){
+    public Product update(Product product) {
         return productRepository.save(product);
     }
-    public void  delete(Long id){
+
+    public void delete(Long id) {
         productRepository.deleteById(id);
     }
 

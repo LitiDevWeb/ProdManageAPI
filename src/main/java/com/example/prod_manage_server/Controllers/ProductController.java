@@ -1,8 +1,10 @@
 package com.example.prod_manage_server.Controllers;
 
 import com.example.prod_manage_server.dto.ProductDTO;
+import com.example.prod_manage_server.dto.ProductOutDTO;
 import com.example.prod_manage_server.entity.Category;
 import com.example.prod_manage_server.entity.Product;
+import com.example.prod_manage_server.mapper.ProductMapper;
 import com.example.prod_manage_server.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,16 +20,18 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService, ProductMapper productMapper){
         this.productService = productService;
+        this.productMapper = productMapper;
     }
 
     @Operation(summary = "Ajouter un produit")
     @PostMapping
-    public ResponseEntity<Product> AddProduct(@RequestBody ProductDTO product) {
+    public ResponseEntity<ProductOutDTO> AddProduct(@RequestBody ProductDTO product) {
         Product newProduct = productService.create(product);
-        return new ResponseEntity<>(newProduct, HttpStatus.OK);
+        return new ResponseEntity<>(productMapper.toProductOutDto(newProduct), HttpStatus.OK);
     }
 
     @Operation(summary = "Modifier un produit")
