@@ -38,6 +38,6 @@ public class ProductService {
     }
 
     public List<Product> search(String name, String category, Double minPrice, Double maxPrice) {
-        return productRepository.findBy(name, category, minPrice, maxPrice);
+        return productRepository.findByFilters(name, category, minPrice, maxPrice);
     }
 }
