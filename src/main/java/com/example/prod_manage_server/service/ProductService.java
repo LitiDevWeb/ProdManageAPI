@@ -36,4 +36,8 @@ public class ProductService {
     public void  delete(Long id){
         productRepository.deleteById(id);
     }
+
+    public List<Product> search(String name, String category, Double minPrice, Double maxPrice) {
+        return productRepository.findBy(name, category, minPrice, maxPrice);
+    }
 }
