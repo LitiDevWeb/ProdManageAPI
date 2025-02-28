@@ -1,5 +1,6 @@
 package com.example.prod_manage_server.Controllers;
 
+import com.example.prod_manage_server.dto.ProductDTO;
 import com.example.prod_manage_server.entity.Category;
 import com.example.prod_manage_server.entity.Product;
 import com.example.prod_manage_server.service.ProductService;
@@ -23,8 +24,8 @@ public class ProductController {
     }
 
     @Operation(summary = "Ajouter un produit")
-    @PostMapping("/")
-    public ResponseEntity<Product> AddProduct(@RequestBody Product product) {
+    @PostMapping
+    public ResponseEntity<Product> AddProduct(@RequestBody ProductDTO product) {
         Product newProduct = productService.create(product);
         return new ResponseEntity<>(newProduct, HttpStatus.OK);
     }
@@ -44,7 +45,7 @@ public class ProductController {
     }
 
     @Operation(summary = "Obtenir la liste des produits")
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.findAll();
         return new ResponseEntity<>(products, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.example.prod_manage_server.configuarton;
+package com.example.prod_manage_server.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
